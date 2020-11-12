@@ -30680,10 +30680,9 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _ref = _jsx("div", {}, void 0, _jsx("h1", {}, void 0, "Speed Typing Game"), _jsx("textarea", {}, void 0), _jsx("h4", {}, void 0, "Amount of time remaining"), _jsx("button", {}, void 0, "Start"));
+var _ref = _jsx("div", {}, void 0, _jsx("h1", {}, void 0, "Speed Typing Game"), _jsx("textarea", {}), _jsx("h4", {}, void 0, "Time Remaining: ???"), _jsx("button", {}, void 0, "Start"), _jsx("h1", {}, void 0, "Word Count: ???"));
 
 function App() {
-
     return _ref;
 }
 
