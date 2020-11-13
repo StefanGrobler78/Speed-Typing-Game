@@ -30674,16 +30674,64 @@ Object.defineProperty(exports, "__esModule", {
 
 var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _ref = _jsx("div", {}, void 0, _jsx("h1", {}, void 0, "Speed Typing Game"), _jsx("textarea", {}), _jsx("h4", {}, void 0, "Time Remaining: ???"), _jsx("button", {}, void 0, "Start"), _jsx("h1", {}, void 0, "Word Count: ???"));
+var _ref = _jsx("h1", {}, void 0, "Speed Typing Game");
+
+var _ref2 = _jsx("h1", {}, void 0, "Word Count: ???");
 
 function App() {
-    return _ref;
+    var _useState = (0, _react.useState)(""),
+        _useState2 = _slicedToArray(_useState, 2),
+        text = _useState2[0],
+        setText = _useState2[1];
+
+    var _useState3 = (0, _react.useState)(15),
+        _useState4 = _slicedToArray(_useState3, 2),
+        timeRemaining = _useState4[0],
+        setTimeRemaining = _useState4[1];
+
+    function handleChange(e) {
+        var value = e.target.value;
+
+        setText(value);
+    }
+
+    function calculateWordCount(text) {
+        var wordsArray = text.trim().split(' ');
+        var filteredWords = wordsArray.filter(function (word) {
+            return word !== "";
+        });
+        return filteredWords.length;
+    }
+
+    (0, _react.useEffect)(function () {
+        if (timeRemaining > 0) {
+            setTimeout(function () {
+                setTimeRemaining(function (time) {
+                    return time - 1;
+                });
+            }, 1000);
+        }
+        return function () {
+            clearTimeout(timeRemaining);
+        };
+    }, [timeRemaining]);
+
+    return _jsx("div", {}, void 0, _ref, _jsx("textarea", {
+        onChange: handleChange,
+        value: text
+    }), _jsx("h4", {}, void 0, "Time Remaining: ", timeRemaining), _jsx("button", {
+        onClick: function onClick() {
+            return console.log(calculateWordCount(text));
+        }
+    }, void 0, "Start"), _ref2);
 }
 
 exports.default = App;
