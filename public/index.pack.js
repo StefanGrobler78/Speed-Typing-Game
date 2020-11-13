@@ -30707,6 +30707,8 @@ function App() {
         wordCount = _useState8[0],
         setWordCount = _useState8[1];
 
+    var textareaRef = (0, _react.useRef)(null);
+
     function handleChange(e) {
         var value = e.target.value;
 
@@ -30724,6 +30726,9 @@ function App() {
         setIsTimeRunning(true);
         setTimeRemaining(STARTING_TIME);
         setText('');
+        setWordCount(0);
+        textareaRef.current.disabled = false;
+        textareaRef.current.focus();
     }
     function endGame() {
         setIsTimeRunning(false);
@@ -30745,7 +30750,8 @@ function App() {
         };
     }, [timeRemaining, isTimeRunning]);
 
-    return _jsx("div", {}, void 0, _ref, _jsx("textarea", {
+    return _jsx("div", {}, void 0, _ref, _react2.default.createElement("textarea", {
+        ref: textareaRef,
         onChange: handleChange,
         value: text,
         disabled: !isTimeRunning
