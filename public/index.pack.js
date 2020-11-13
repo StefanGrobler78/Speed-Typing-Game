@@ -30684,18 +30684,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _ref = _jsx("h1", {}, void 0, "Speed Typing Game");
 
-var _ref2 = _jsx("h1", {}, void 0, "Word Count: ???");
-
 function App() {
+    var STARTING_TIME = 15;
+
     var _useState = (0, _react.useState)(""),
         _useState2 = _slicedToArray(_useState, 2),
         text = _useState2[0],
         setText = _useState2[1];
 
-    var _useState3 = (0, _react.useState)(15),
+    var _useState3 = (0, _react.useState)(STARTING_TIME),
         _useState4 = _slicedToArray(_useState3, 2),
         timeRemaining = _useState4[0],
         setTimeRemaining = _useState4[1];
+
+    var _useState5 = (0, _react.useState)(false),
+        _useState6 = _slicedToArray(_useState5, 2),
+        isTimeRunning = _useState6[0],
+        setIsTimeRunning = _useState6[1];
+
+    var _useState7 = (0, _react.useState)(0),
+        _useState8 = _slicedToArray(_useState7, 2),
+        wordCount = _useState8[0],
+        setWordCount = _useState8[1];
 
     function handleChange(e) {
         var value = e.target.value;
@@ -30710,28 +30720,39 @@ function App() {
         });
         return filteredWords.length;
     }
+    function startGame() {
+        setIsTimeRunning(true);
+        setTimeRemaining(STARTING_TIME);
+        setText('');
+    }
+    function endGame() {
+        setIsTimeRunning(false);
+        setWordCount(calculateWordCount(text));
+    }
 
     (0, _react.useEffect)(function () {
-        if (timeRemaining > 0) {
+        if (isTimeRunning && timeRemaining > 0) {
             setTimeout(function () {
                 setTimeRemaining(function (time) {
                     return time - 1;
                 });
             }, 1000);
+        } else if (timeRemaining === 0) {
+            endGame();
         }
         return function () {
             clearTimeout(timeRemaining);
         };
-    }, [timeRemaining]);
+    }, [timeRemaining, isTimeRunning]);
 
     return _jsx("div", {}, void 0, _ref, _jsx("textarea", {
         onChange: handleChange,
-        value: text
+        value: text,
+        disabled: !isTimeRunning
     }), _jsx("h4", {}, void 0, "Time Remaining: ", timeRemaining), _jsx("button", {
-        onClick: function onClick() {
-            return console.log(calculateWordCount(text));
-        }
-    }, void 0, "Start"), _ref2);
+        onClick: startGame,
+        disabled: isTimeRunning
+    }, void 0, "Start"), _jsx("h1", {}, void 0, "Word Count: ", wordCount));
 }
 
 exports.default = App;
